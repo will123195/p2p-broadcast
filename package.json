@@ -1,0 +1,11 @@
+{
+  "name": "p2p-broadcast",
+  "version": "1.0.0",
+  "description": "Distributed P2P discovery and message broadcasting",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "author": "will123195",
+  "license": "MIT"
+}
