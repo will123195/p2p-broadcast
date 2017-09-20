@@ -1,27 +1,35 @@
-# p2p-network
+# p2p-broadcast
+
+Distributed P2P discovery and event broadcasting
+
+## Install
+
+```
+npm install p2p-broadcast
+```
 
 ## Usage
 
 ```js
-import Node from 'p2p-network'
+import Node from 'p2p-broadcast'
 
-const node = new Node({
-  port: 6005,
-  seedHosts: ['127.0.0.1:6004']
-})
+const seedHosts = ['localhost:6000']
 
-node.on('myCommand', (peer, message) => {
-  const host = peer.host
-  console.log(`Received 'myCommand' message from ${host}:`, message)
-  // relay the message to all peers except the host that sent the message
-  node.relay(message, { excludeHosts: [host] })
-})
+const a = new Node({ port: 6000 })
+const b = new Node({ port: 6001, seedHosts })
+const c = new Node({ port: 6002, seedHosts })
 
-node.joinNetwork()
+a.on('beep', onBeep)
+b.on('beep', onBeep)
+c.on('beep', onBeep)
 
-const message = {
-  command: 'myCommand',
-  payload: null
+a.broadcast('beep', { hello: 'world' })
+
+function onBeep(event) {
+  // event.name
+  // event.payload
+  // event.peer
+  // event.hops
+  // event.id
 }
-node.broadcast(message)
 ```
