@@ -33,3 +33,7 @@ function onBeep(event) {
   // event.id
 }
 ```
+
+## Network Topology
+
+New nodes join the network to form a partial mesh network topology.
