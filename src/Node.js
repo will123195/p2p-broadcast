@@ -96,7 +96,6 @@ class Node extends EventEmitter {
       if (this.peers.length >= this.maxPeers) {
         peer.send('hosts!', this.seedHosts)
         socket.ending = true
-        console.log(`${this.port} server disconnecting from ${peer.port}`)
         return socket.end()
       }
       peer.send('port?')

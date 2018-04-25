@@ -24,7 +24,7 @@ All options are optional.
 ## Example
 
 ```js
-import Node from 'p2p-broadcast'
+import { Node } from 'p2p-broadcast'
 
 const seedHosts = ['localhost:6000']
 

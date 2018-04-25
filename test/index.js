@@ -1,4 +1,4 @@
-const Node = require('../src/Node')
+const { Node } = require('../src')
 const test = require('tape')
 const Promise = require('bluebird')
 

@@ -1,4 +1,4 @@
-const Node = require('../src/Node')
+const { Node } = require('../src')
 
 const firstNode = new Node({ port: 4000 })
 const nodes = [firstNode]
