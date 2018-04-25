@@ -1,11 +1,18 @@
 {
   "name": "p2p-broadcast",
-  "version": "1.0.0",
-  "description": "Distributed P2P discovery and message broadcasting",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Simple P2P message broadcasting",
+  "main": "src/Node.js",
   "scripts": {
     "test": "node test"
   },
   "author": "will123195",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "bluebird": "^3.5.0",
+    "tape": "^4.8.0"
+  },
+  "dependencies": {
+    "split": "^1.0.1"
+  }
 }
