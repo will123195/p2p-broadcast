@@ -10,8 +10,6 @@ npm install p2p-broadcast
 
 ## Usage
 
-All options are optional.
-
 ```js
 const node = new Node({
   port: 6000,
@@ -20,6 +18,8 @@ const node = new Node({
   maxPeers: 10
 })
 ```
+
+All options are optional.
 
 ## Example
 
