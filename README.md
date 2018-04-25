@@ -12,7 +12,7 @@ npm install p2p-broadcast
 
 All options are optional.
 
-```
+```js
 const node = new Node({
   port: 6000,
   seedHosts: ['example.com:1234'],
