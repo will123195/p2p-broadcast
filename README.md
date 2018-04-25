@@ -16,8 +16,8 @@ All options are optional.
 const node = new Node({
   port: 6000,
   seedHosts: ['example.com:1234'],
-  minPeers = 3,
-  maxPeers = 10
+  minPeers: 3,
+  maxPeers: 10
 })
 ```
 
@@ -30,7 +30,7 @@ const seedHosts = ['localhost:6000']
 
 const a = new Node({ port: 6000 })
 const b = new Node({ seedHosts })
-const c = new Node({ seedHosts })
+const c = new Node({ port: 6001, seedHosts })
 
 const onBeep = n => ({ id, name, data, peer, hops }) => {
   console.log(n, name, data)
