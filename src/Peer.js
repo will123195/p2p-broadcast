@@ -39,13 +39,15 @@ class Peer {
         // this.seedHosts = message.payload
         return this.node.addSeedHosts(message.payload)
       }
-      default: return this.node.emit(message.command, {
-        id: message.id,
-        name: message.command,
-        data: message.payload,
-        peer: this,
-        hops: message.hops
-      })
+      default: 
+        this.node.debug('[p2p] receive:', message.command, message.payload)
+        return this.node.emit(message.command, {
+          id: message.id,
+          name: message.command,
+          data: message.payload,
+          peer: this,
+          hops: message.hops
+        })
     }
   }
 
@@ -56,7 +58,11 @@ class Peer {
   }
 
   write(message) {
-    this.socket.write(`${JSON.stringify(message)}\n`)
+    try {
+      this.socket.write(`${JSON.stringify(message)}\n`)
+    } catch (err) {
+      this.node.removePeer(this)
+    }
   }
 
   getHostname() {

@@ -4,6 +4,7 @@ const Peer = require('./Peer')
 const uuid = require('./uuid')
 
 const random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+const noOp = () => {}
 
 class Node extends EventEmitter {
   /**
@@ -17,7 +18,8 @@ class Node extends EventEmitter {
     port,
     seedHosts = [],
     minPeers = 3,
-    maxPeers = 10
+    maxPeers = 10,
+    debug
   } = {}) {
     super()
     this.id = uuid()
@@ -29,6 +31,7 @@ class Node extends EventEmitter {
     this.peers = []
     this.receivedMessages = {}
     this.seedHosts = seedHosts
+    this.debug = debug || noOp
     this.startServer()
     setInterval(() => this.joinNetwork(), 1000)
   }
@@ -40,6 +43,7 @@ class Node extends EventEmitter {
   }
 
   broadcast(command, payload = {}) {
+    this.debug('[p2p] broadcast:', command, payload)
     const message = this.createMessage({ command, payload, broadcast: true })
     this.broadcastMessage(message)
   }
@@ -69,7 +73,7 @@ class Node extends EventEmitter {
     socket.on('end', () => this.removePeer(peer))
     socket.on('timeout', () => console.log(`${this.port} socket timeout`))
     socket.on('drain', () => console.log(`${this.port} socket drain`))
-    socket.on('error', error => console.log(`${this.port} socket error:`, error))
+    socket.on('error', error => this.removePeer(peer))
     peer.port = Number(port)
     peer.isOutgoingConnection = true
     this.peers.push(peer)

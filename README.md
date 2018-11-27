@@ -15,7 +15,8 @@ const node = new Node({
   port: 6000,
   seedHosts: ['example.com:1234'],
   minPeers: 3,
-  maxPeers: 10
+  maxPeers: 10,
+  debug: console.log
 })
 ```
 
