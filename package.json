@@ -8,6 +8,10 @@
   },
   "author": "will123195",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/will123195/p2p-broadcast.git"
+  },
   "devDependencies": {
     "bluebird": "^3.5.0",
     "tape": "^4.8.0"
