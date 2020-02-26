@@ -31,9 +31,10 @@ class Node extends EventEmitter {
     this.peers = []
     this.receivedMessages = {}
     this.seedHosts = seedHosts
+    this.failedSeedHosts = {}
     this.debug = debug || noOp
     this.startServer()
-    setInterval(() => this.joinNetwork(), 1000)
+    setInterval(() => this.joinNetwork(), 250)
   }
 
   createMessage({ command, payload = {}, broadcast = false }) {
@@ -61,11 +62,12 @@ class Node extends EventEmitter {
    */
   connect({ hostname = 'localhost', port }) {
     const host = `${hostname}:${port}`
-    const alreadyConnected = this.peers.find(p => (host === `${p.getHostname()}:${p.port}`))
+    const existingPeer = this.peers.find(p => (host === `${p.getHostname()}:${p.port}`))
+    // console.log(this.port, 'connect to', port, this.peers.length, !!existingPeer)
     // TODO: isSelf should consider private ip and public ip
     const isSelf = (host === this.host)
     if (isSelf) return
-    if (alreadyConnected) return alreadyConnected.send('hosts?')
+    if (existingPeer) return existingPeer.send('hosts?')
     const socket = net.createConnection(port, hostname)
     const peer = new Peer({ socket, node: this })
     peer.host = host
@@ -82,7 +84,7 @@ class Node extends EventEmitter {
   removePeer(peer) {
     const index = this.peers.findIndex(p => p.id === peer.id)
     this.peers.splice(index, 1)
-    // this.removeSeedHost(peer.host)
+    this.failedSeedHosts[peer.host] = true
   }
 
   /**
@@ -127,6 +129,7 @@ class Node extends EventEmitter {
     if (!this.port) return
     const rand = random(0, this.seedHosts.length - 1)
     const host = this.seedHosts[rand]
+    if (this.failedSeedHosts[host]) return this.joinNetwork()
     const index = host.lastIndexOf(':')
     const hostname = host.slice(0, index)
     const port = host.slice(index + 1)
