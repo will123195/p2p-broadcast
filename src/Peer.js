@@ -46,7 +46,8 @@ class Peer {
           name: message.command,
           data: message.payload,
           peer: this,
-          hops: message.hops
+          hops: message.hops,
+          sender: message.sender,
         })
     }
   }
