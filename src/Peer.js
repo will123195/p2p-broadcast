@@ -9,7 +9,6 @@ class Peer {
     this.socket = socket
     this.node = node
     this.receivedMessages = {}
-    // this.seedHosts = [] // the seed hosts sent from this peer
   }
 
   receive(message) {
@@ -22,7 +21,10 @@ class Peer {
     this.node.receivedMessages[message.id] = true
     const hostname = this.getHostname()
     if (message.broadcast) {
-      this.node.broadcastMessage(message)
+      Promise.resolve()
+        .then(() => this.node.validateRelay(message))
+        .then(() => this.node.broadcastMessage(message))
+        .catch(() => {})
     }
     switch (message.command) {
       case 'port?': return this.send('port!', this.node.port)

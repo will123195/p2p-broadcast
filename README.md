@@ -16,7 +16,8 @@ const node = new Node({
   seedHosts: ['example.com:1234'],
   minPeers: 3,
   maxPeers: 10,
-  debug: console.log
+  debug: console.log,
+  validateRelay: message => {} // will not relay message if error is thrown
 })
 ```
 
