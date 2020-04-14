@@ -129,7 +129,6 @@ class Node extends EventEmitter {
     if (!this.port) return
     const rand = random(0, this.seedHosts.length - 1)
     const host = this.seedHosts[rand]
-    if (this.failedSeedHosts[host]) return this.joinNetwork()
     const index = host.lastIndexOf(':')
     const hostname = host.slice(0, index)
     const port = host.slice(index + 1)
