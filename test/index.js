@@ -11,13 +11,8 @@ async function createNewNode (opts) {
   node.on('hello', (event) => {
     // const { name, payload, peer, hops, id } = event
     node.receivedHello = true
-    // console.log('receivedHello!')
   })
   return node
-  // return new Promise((resolve, reject) => {
-  //   node.joinNetwork()
-  //   resolve(node)
-  // })
 }
 
 let nodes = {}
