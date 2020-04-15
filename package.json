@@ -1,6 +1,6 @@
 {
   "name": "p2p-broadcast",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple P2P message broadcasting",
   "main": "src/index.js",
   "scripts": {
