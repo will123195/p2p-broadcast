@@ -20,7 +20,7 @@ class Node extends EventEmitter {
     minPeers = 3,
     maxPeers = 10,
     debug,
-    validateRelay
+    validate
   } = {}) {
     super()
     this.id = uuid()
@@ -34,7 +34,7 @@ class Node extends EventEmitter {
     this.seedHosts = seedHosts
     this.failedSeedHosts = {}
     this.debug = debug || noOp
-    this.validateRelay = validateRelay || noOp
+    this.validate = validate || noOp
     this.startServer()
     setInterval(() => this.joinNetwork(), 250)
   }

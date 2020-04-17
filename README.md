@@ -17,7 +17,7 @@ const node = new Node({
   minPeers: 3,
   maxPeers: 10,
   debug: console.log,
-  validateRelay: message => {} // will not relay message if error is thrown
+  validate: message => {} // will ignore message if error is thrown
 })
 ```
 

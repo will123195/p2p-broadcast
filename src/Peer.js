@@ -20,12 +20,7 @@ class Peer {
     if (alreadyReceived || isOriginalSender) return
     this.node.receivedMessages[message.id] = true
     const hostname = this.getHostname()
-    if (message.broadcast) {
-      Promise.resolve()
-        .then(() => this.node.validateRelay(message))
-        .then(() => this.node.broadcastMessage(message))
-        .catch(() => {})
-    }
+
     switch (message.command) {
       case 'port?': return this.send('port!', this.node.port)
       case 'port!': {
@@ -38,19 +33,26 @@ class Peer {
         return this.send('hosts!', this.node.seedHosts)
       }
       case 'hosts!': {
-        // this.seedHosts = message.payload
         return this.node.addSeedHosts(message.payload)
       }
       default: 
-        this.node.debug('[p2p] receive:', message.command, message.payload)
-        return this.node.emit(message.command, {
-          id: message.id,
-          name: message.command,
-          data: message.payload,
-          peer: this,
-          hops: message.hops,
-          sender: message.sender,
+        Promise.resolve()
+        .then(() => this.node.validate(message))
+        .then(() => {
+          if (message.broadcast) {
+            this.node.broadcastMessage(message)
+          }
+          this.node.debug('[p2p] receive:', message.command, message.payload)
+          this.node.emit(message.command, {
+            id: message.id,
+            name: message.command,
+            data: message.payload,
+            peer: this,
+            hops: message.hops,
+            sender: message.sender,
+          })
         })
+        .catch(() => {})
     }
   }
 

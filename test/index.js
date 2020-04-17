@@ -17,19 +17,19 @@ async function createNewNode (opts) {
 
 let nodes = {}
 
-const validateRelay = message => {
+const validate = message => {
   // throw new Error('invalid message')
 }
 
 test('create mesh network', async t => {
   nodes.a = await createNewNode({ port: 6001 })
-  nodes.b = await createNewNode({ port: 6002, seedHosts, validateRelay })
-  nodes.c = await createNewNode({ port: 6003, seedHosts, validateRelay })
-  nodes.d = await createNewNode({ port: 6004, seedHosts, validateRelay })
-  nodes.e = await createNewNode({ port: 6005, seedHosts, validateRelay })
-  nodes.f = await createNewNode({ port: 6006, seedHosts, validateRelay })
-  nodes.g = await createNewNode({ port: 6007, seedHosts, validateRelay })
-  nodes.h = await createNewNode({ port: 6008, seedHosts, validateRelay })
+  nodes.b = await createNewNode({ port: 6002, seedHosts, validate })
+  nodes.c = await createNewNode({ port: 6003, seedHosts, validate })
+  nodes.d = await createNewNode({ port: 6004, seedHosts, validate })
+  nodes.e = await createNewNode({ port: 6005, seedHosts, validate })
+  nodes.f = await createNewNode({ port: 6006, seedHosts, validate })
+  nodes.g = await createNewNode({ port: 6007, seedHosts, validate })
+  nodes.h = await createNewNode({ port: 6008, seedHosts, validate })
 
   // wait for the nodes to establish mesh network
   setTimeout(() => {
