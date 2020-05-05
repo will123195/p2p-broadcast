@@ -42,7 +42,7 @@ class Peer {
           if (message.broadcast) {
             this.node.broadcastMessage(message)
           }
-          this.node.debug('[p2p] receive:', message.command, message.payload)
+          this.node.debug('[p2p] receive:', message)
           this.node.emit(message.command, {
             id: message.id,
             name: message.command,
@@ -60,6 +60,7 @@ class Peer {
     if (this.socket.ending) return
     const message = this.node.createMessage({ command, payload, broadcast })
     this.write(message)
+    return message
   }
 
   write(message) {
