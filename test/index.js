@@ -21,9 +21,15 @@ const validate = message => {
   // throw new Error('invalid message')
 }
 
+let onConnectCounts = {}
+const onConnect = ({ peer }) => {
+  onConnectCounts[peer.node.host] = onConnectCounts[peer.node.host] || 0
+  onConnectCounts[peer.node.host] += 1
+}
+
 test('create mesh network', async t => {
-  nodes.a = await createNewNode({ port: 6001 })
-  nodes.b = await createNewNode({ port: 6002, seedHosts, validate })
+  nodes.a = await createNewNode({ port: 6001, onConnect })
+  nodes.b = await createNewNode({ port: 6002, seedHosts, validate, onConnect })
   nodes.c = await createNewNode({ port: 6003, seedHosts, validate })
   nodes.d = await createNewNode({ port: 6004, seedHosts, validate })
   nodes.e = await createNewNode({ port: 6005, seedHosts, validate })
@@ -40,6 +46,7 @@ test('create mesh network', async t => {
     Object.keys(nodes).forEach(key => {
       console.log(`${nodes[key].port} is connected to:`, nodes[key].peers.map(peer => peer.port))
     })
+    console.log({ onConnectCounts })
     t.end()
   }, 5000)
 })
@@ -66,7 +73,8 @@ test('broadcast message', t => {
       // console.log(key, node.port, receivedHello)
       t.ok(receivedHello, `${key}.receivedHello`)
     })
-  }, 5000)
+    t.end()
+  }, 500)
 })
 
 // e.on('customCommand', (peer, message) => {

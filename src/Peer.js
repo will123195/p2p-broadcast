@@ -9,6 +9,13 @@ class Peer {
     this.socket = socket
     this.node = node
     this.receivedMessages = {}
+    this.isConfirmed = false
+  }
+
+  confirmConnection() {
+    if (this.isConfirmed) return
+    this.isConfirmed = true
+    this.node.onConnect({ peer: this })
   }
 
   receive(message) {
@@ -22,8 +29,12 @@ class Peer {
     const hostname = this.getHostname()
 
     switch (message.command) {
-      case 'port?': return this.send('port!', this.node.port)
+      case 'port?': {
+        if (this.isOutgoingConnection) this.confirmConnection()
+        return this.send('port!', this.node.port)
+      }
       case 'port!': {
+        if (this.isIncomingConnection) this.confirmConnection()
         const port = Number(message.payload)
         this.port = port
         return this.node.addSeedHosts([`${hostname}:${port}`])

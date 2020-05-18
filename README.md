@@ -32,7 +32,7 @@ const seedHosts = ['localhost:6000']
 
 const a = new Node({ port: 6000 })
 const b = new Node({ seedHosts })
-const c = new Node({ port: 6001, seedHosts })
+const c = new Node({ port: 6001, seedHosts, onConnect })
 
 const onBeep = n => ({ id, name, data, peer, hops }) => {
   console.log(n, name, data)
@@ -48,6 +48,8 @@ c.broadcast('beep', { hello: 'world' })
 // a beep { hello: 'world' }
 // b beep { hello: 'world' }
 ```
+
+const onConnect = ({ peer }) => console.log(`Connected to ${peer.node.host}`)
 
 ## Network Topology
 
