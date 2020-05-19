@@ -53,8 +53,8 @@ class Node extends EventEmitter {
   }
 
   broadcast(command, payload = {}) {
-    this.debug('[p2p] broadcast:', command, payload)
     const message = this.createMessage({ command, payload, broadcast: true })
+    this.debug('[p2p] broadcast:', message)
     this.broadcastMessage(message)
   }
 

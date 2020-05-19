@@ -74,6 +74,7 @@ class Peer {
     } = options
     if (this.socket.ending) return
     const message = this.node.createMessage({ command, payload, broadcast, id })
+    this.node.debug('[p2p] send:', message)
     this.write(message)
     return message
   }
