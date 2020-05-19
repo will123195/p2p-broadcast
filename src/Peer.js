@@ -67,9 +67,13 @@ class Peer {
     }
   }
 
-  send(command, payload = {}, broadcast = false) {
+  send(command, payload = {}, options = {}) {
+    const { 
+      broadcast = false,
+      id
+    } = options
     if (this.socket.ending) return
-    const message = this.node.createMessage({ command, payload, broadcast })
+    const message = this.node.createMessage({ command, payload, broadcast, id })
     this.write(message)
     return message
   }

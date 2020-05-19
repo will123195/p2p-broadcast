@@ -41,10 +41,15 @@ class Node extends EventEmitter {
     setInterval(() => this.joinNetwork(), 250)
   }
 
-  createMessage({ command, payload = {}, broadcast = false }) {
+  createMessage({ command, payload = {}, broadcast = false, id }) {
     const sender = this.id
-    const id = uuid()
-    return { id, sender, command, payload, broadcast }
+    return { 
+      id: id || uuid(),
+      sender,
+      command,
+      payload,
+      broadcast
+    }
   }
 
   broadcast(command, payload = {}) {
