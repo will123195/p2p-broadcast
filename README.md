@@ -29,6 +29,7 @@ All options are optional.
 import { Node } from 'p2p-broadcast'
 
 const seedHosts = ['localhost:6000']
+const onConnect = ({ peer }) => console.log(`Connected to ${peer.node.host}`)
 
 const a = new Node({ port: 6000 })
 const b = new Node({ seedHosts })
@@ -48,8 +49,6 @@ c.broadcast('beep', { hello: 'world' })
 // a beep { hello: 'world' }
 // b beep { hello: 'world' }
 ```
-
-const onConnect = ({ peer }) => console.log(`Connected to ${peer.node.host}`)
 
 ## Network Topology
 
